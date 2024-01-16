@@ -1,0 +1,9 @@
+name: "Conditional Token"
+type: module
+description: "Set path alias for SOF events"
+core_version_requirement: ^10
+package: "Academy Production"
+
+ddependencies:
+  - node
+  - path_alias

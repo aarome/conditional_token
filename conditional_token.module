@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_pathauto_alias_alter() for the conditional_token module.
+ */
+function conditional_token_pathauto_alias_alter(&$alias, array &$context) {
+  // Check if the entity being processed is a node and the bundle is 'events'.
+  if (isset($context['data']['node']) && $context['data']['node'] instanceof NodeInterface) {
+    /** @var \Drupal\node\Entity\Node $node */
+    $node = $context['data']['node'];
+
+    // Ensure this alteration only happens for 'events' nodes.
+    if ($node->getType() === 'events') {
+      // Check if the 'field_events_event_type' field is set and not empty.
+      if ($node->hasField('field_events_event_type') && !$node->get('field_events_event_type')->isEmpty()) {
+        $eventTypeTermId = $node->get('field_events_event_type')->target_id;
+
+        // Alter the alias if the term ID matches the specific taxonomy term.
+        // Replace 1375 with your specific term ID.
+        if ($eventTypeTermId == 1375) {
+          // Define your custom logic for altering the alias.
+          $alias = '/society-of-fellows' . $alias;
+
+          // Logging the alteration.
+          \Drupal::logger('conditional_token')->notice('Pathauto alias altered to: @alias', ['@alias' => $alias]);
+        }
+      }
+    }
+  }
+}
