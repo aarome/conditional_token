@@ -24,8 +24,18 @@ function conditional_token_pathauto_alias_alter(&$alias, array &$context) {
         // Alter the alias if the term ID matches the specific taxonomy term.
         // Replace 1375 with your specific term ID.
         if ($eventTypeTermId == 1375) {
-          // Define your custom logic for altering the alias.
-          $alias = '/society-of-fellows' . $alias;
+          // Determine the current language of the node.
+          $langcode = $node->language()->getId();
+
+          // Define your custom logic for altering the alias based on language.
+          if ($langcode == 'it') {
+            // Italian alias.
+            $alias = '/associazione-dei-borsisti' . $alias;
+          }
+          else {
+            // Default alias.
+            $alias = '/society-of-fellows' . $alias;
+          }
 
           // Logging the alteration.
           \Drupal::logger('conditional_token')->notice('Pathauto alias altered to: @alias', ['@alias' => $alias]);
