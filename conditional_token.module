@@ -30,7 +30,7 @@ function conditional_token_pathauto_alias_alter(&$alias, array &$context) {
           // Define your custom logic for altering the alias based on language.
           if ($langcode == 'it') {
             // Italian alias.
-            $alias = '/associazione-dei-borsisti' . $alias;
+            $alias = '/membri-dell-aar' . $alias;
           }
           else {
             // Default alias.
